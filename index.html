@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>War Card Game</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
+</head>
+<body>
+    <div class="modal" id="modal">
+        <div class="modalContainer">
+            <h1 id="title">♠️WAR♣️</h1>
+            <p id="rules">How to Play:</p>
+            <ol>
+                <li>Click the Flip Button.</li>
+                <li>When clicked, you and the computer will flip your cards.</li>
+                <li>Whoever flips the card with the highest value wins and puts those cards onto the bottom of their pile.</li>
+                <li>If both of your cards have the same value, a war initiates.</li>
+                <li>After clicking "Start War" 3 cards will be put to the side and the fourth card on top will be flipped.</li>
+                <li>Whoever's card has the highest value, they take all of the cards on the current field.</li>
+                <li>The person that obtains all of the cards wins!</li>
+                <li>If a player runs out of cards during a war, they lose!</li>
+            </ol>
+
+            <button class="startButton" onclick="startGame()">Start the War</button>
+        </div>
+    </div>
+
+    <div id="container">
+            <button id="showCardBtn" onclick="showCard()">Show Card</button>
+    </div>
+</body>
+</html>
