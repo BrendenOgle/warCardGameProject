@@ -13,7 +13,7 @@ function startGame(){
     document.getElementById("modal").style.visibility = "hidden"
     shuffleDeck(deck)
     shuffleDeck(deck)
-    
+    deckPile()
 }
 
 function shuffleDeck(array) {
@@ -45,7 +45,34 @@ function createDeck(){
     console.log(deck)
 }
 
-function showCard(){
+
+
+
+
+function deckPile(){
+    let pile = document.getElementById("cardPile")
+
+    for(let i = 0; i < deck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${deck[i].value}</p>
+            <p class="cardSuit">${deck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${deck[i].suit}</p>
+            <p class="rightPartCard cardValue">${deck[i].value}</p>
+        `
+        
+        card.onclick = function(){
+            card.remove("div")
+        }
+        pile.appendChild(card)
+    }
+}
+
+
+// This function creates a front facing card of the first card in the deck array
+
+/* function showCard(){
     let card = document.createElement("div")
     let container = document.getElementById("container")
     container.appendChild(card)
@@ -78,4 +105,4 @@ function showCard(){
         }
     }
     
-}
+} */
