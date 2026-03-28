@@ -120,3 +120,71 @@
     transform: translateY(-1px);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8);
 }
+
+.computerDeckContainer{
+    height: 180px;
+    width: 125px;
+    position: absolute;
+    margin-top: 20px;
+}
+
+.playerDeckContainer{
+    height: 180px;
+    width: 125px;
+    position: absolute;
+    margin-top: 40%;
+}
+
+.flipButton{
+    height: 10%;
+    width: 15%;
+    font-size: 42px;
+    border-radius: 10px;
+    align-self: flex-end;
+    position: absolute;
+    margin-top: 350px;
+    margin-right: 50px;
+    background-color: green;
+    color: yellow;
+    transition: transform .3s, box-shadow .3s;
+}
+
+
+.flipButton:hover{
+    transform: translateY(-4px);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.flipButton:active{
+    transform: translateY(-1px);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+.activePlayerCard{
+    height: 180px;
+    width: 125px;
+    border: 1px solid black;
+    margin-top: 425px;
+    position: absolute;
+    background-color: black;
+    border-radius: 7px;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    padding-top: 40px;
+}
+
+.activeComputerCard{
+    height: 180px;
+    width: 125px;
+    border: 1px solid black;
+    margin-top: 210px;
+    position: absolute;
+    background-color: black;
+    border-radius: 7px;
+    text-align: center;
+    color: white;
+    font-size: 24px;
+    padding-top: 40px;
+}
