@@ -5,6 +5,9 @@ let value = [14, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13]
 
 let playerDeck = []
 let computerDeck = []
+let fieldDeck = []
+let pile = document.getElementById("cardPile")
+let container = document.getElementById("container")
 
 
 // main function that will call all sub-functions
@@ -47,10 +50,7 @@ function createDeck(){
 
 
 
-
-
 function deckPile(){
-    let pile = document.getElementById("cardPile")
 
     for(let i = 0; i < deck.length; i++){
         let card = document.createElement("div")
@@ -62,12 +62,83 @@ function deckPile(){
             <p class="rightPartCard cardValue">${deck[i].value}</p>
         `
         
-        card.onclick = function(){
-            card.remove("div")
-        }
+        
         pile.appendChild(card)
     }
 }
+
+function dealHands(){
+    let i = 0
+    while(deck.length !== 0){
+        let topCard = deck.pop()
+
+        if(i === 0){
+            computerDeck.push(topCard)
+            i++
+        }else if(i === 1){
+            playerDeck.push(topCard)
+            i--
+        }
+    }
+    console.log(computerDeck)
+    console.log(playerDeck)
+    pile.innerHTML = ``
+    pile.remove("div")
+    document.getElementById("dealer").remove("button")
+    
+    let flipButton = document.createElement("button")
+    let computerDeckContainer = document.createElement("div")
+    let playerDeckContainer = document.createElement("div")
+    flipButton.classList.add("flipButton")
+    playerDeckContainer.classList.add("playerDeckContainer")
+    computerDeckContainer.classList.add("computerDeckContainer")
+    container.appendChild(computerDeckContainer)
+    container.appendChild(flipButton)
+    container.appendChild(playerDeckContainer)
+
+    for(let i = 0; i < computerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${computerDeck[i].value}</p>
+            <p class="cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${computerDeck[i].value}</p>
+        `
+        computerDeckContainer.appendChild(card)
+    }
+
+    for(let i = 0; i < playerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${playerDeck[i].value}</p>
+            <p class="cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${playerDeck[i].value}</p>
+        `
+        playerDeckContainer.appendChild(card)
+    }
+    
+    let activePlayerCard = document.createElement("div")
+    let activeComputerCard = document.createElement("div")
+    activePlayerCard.classList.add("activePlayerCard")
+    activeComputerCard.classList.add("activeComputerCard")
+    container.appendChild(activeComputerCard)
+    container.appendChild(activePlayerCard)
+
+    activeComputerCard.innerText = "Active Computer Card"
+    activePlayerCard.innerText = "Active Player Card"
+
+    flipButton.textContent = "Flip Cards"
+    flipButton.onclick = flipCards
+}
+
+function flipCards(){
+    
+}
+
+
 
 
 // This function creates a front facing card of the first card in the deck array
