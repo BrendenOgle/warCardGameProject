@@ -114,6 +114,7 @@
 #dealer:hover{
     transform: translateY(-4px);
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
 }
 
 #dealer:active{
