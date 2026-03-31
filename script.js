@@ -124,21 +124,120 @@ function dealHands(){
     let activeComputerCard = document.createElement("div")
     activePlayerCard.classList.add("activePlayerCard")
     activeComputerCard.classList.add("activeComputerCard")
+    activePlayerCard.id = "activePlayerCard"
+    activeComputerCard.id = "activeComputerCard"
     container.appendChild(activeComputerCard)
     container.appendChild(activePlayerCard)
 
-    activeComputerCard.innerText = "Active Computer Card"
-    activePlayerCard.innerText = "Active Player Card"
+    activeComputerCard.textContent = "Active Computer Card"
+    activePlayerCard.textContent = "Active Player Card"
 
     flipButton.textContent = "Flip Cards"
     flipButton.onclick = flipCards
 }
 
 function flipCards(){
+    fieldDeck.push(playerDeck[playerDeck.length - 1])
+    fieldDeck.push(computerDeck[computerDeck.length - 1])
+    playerDeck.pop()
+    computerDeck.pop()
+
+    let computerDeckContainer = document.getElementsByClassName("computerDeckContainer")[0]
+    let playerDeckContainer = document.getElementsByClassName("playerDeckContainer")[0]
     
+    computerDeckContainer.innerHTML = ``
+    playerDeckContainer.innerHTML = ``
+    for(let i = 0; i < computerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${computerDeck[i].value}</p>
+            <p class="cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${computerDeck[i].value}</p>
+        `
+        computerDeckContainer.appendChild(card)
+    }
+
+    for(let i = 0; i < playerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${playerDeck[i].value}</p>
+            <p class="cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${playerDeck[i].value}</p>
+        `
+        playerDeckContainer.appendChild(card)
+    }
+    
+    let modal2 = document.getElementById("modal2")
+    console.log(fieldDeck)
+    let activePlayerCard = document.getElementById("activePlayerCard")
+    let activeComputerCard = document.getElementById("activeComputerCard")
+
+    for(let i = 0; i < fieldDeck.length; i++){
+        if(i === 0){
+            let card = document.createElement("div")
+            card.classList.add("card")
+            card.innerHTML = `
+                <p class="cardValue">${fieldDeck[0].value}</p>
+                <p class="cardSuit">${fieldDeck[0].suit}</p>
+                <p class="rightPartCard cardSuit">${fieldDeck[0].suit}</p>
+                <p class="rightPartCard cardValue">${fieldDeck[0].value}</p>
+            `
+            activePlayerCard.appendChild(card)
+            activePlayerCard.innerHTML = ``
+        }else if(i === 1){
+            let card = document.createElement("div")
+            card.classList.add("card")
+            card.innerHTML = `
+                <p class="cardValue">${fieldDeck[1].value}</p>
+                <p class="cardSuit">${fieldDeck[1].suit}</p>
+                <p class="rightPartCard cardSuit">${fieldDeck[1].suit}</p>
+                <p class="rightPartCard cardValue">${fieldDeck[1].value}</p>
+            `
+            activeComputerCard.appendChild(card)
+            activeComputerCard.innerHTML = ``
+        }
+        fieldDeck = []
+    }
+
+
+    setTimeout(() =>{
+        modal2.style.visibility = "visible"
+        modal2.style.opacity = "1"
+        hideCards()
+    }, 1000)
+
+    setTimeout(() =>{
+        modal2.style.visibility = "hidden"
+        modal2.style.opacity = "0"
+        showCards()
+    }, 2000)
 }
 
+function hideCards(){
+    let cards = document.getElementsByClassName("card")
+    console.log(cards)
+    for(let i = 0; i < cards.length; i++){
+        cards[i].style.visibility = "hidden"
+    }
+    document.getElementsByClassName("activeComputerCard")[0].style.visibility = "hidden"
+    document.getElementsByClassName("activePlayerCard")[0].style.visibility = "hidden"
+    document.getElementsByClassName("flipButton")[0].style.visibility = "hidden"
+}
 
+function showCards(){
+    let cards = document.getElementsByClassName("card")
+    console.log(cards)
+    for(let i = 0; i < cards.length; i++){
+        cards[i].style.visibility = "visible"
+    }
+    document.getElementsByClassName("activeComputerCard")[0].style.visibility = "visible"
+    document.getElementsByClassName("activePlayerCard")[0].style.visibility = "visible"
+    document.getElementsByClassName("flipButton")[0].style.visibility = "visible"
+}
 
 
 // This function creates a front facing card of the first card in the deck array
