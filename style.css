@@ -201,7 +201,7 @@
     position: fixed;
     visibility: hidden;
     opacity: 0;
-    transition: opacity .3s ease-in-out;
+    transition: opacity .5s ease-in-out;
 }
 
 .modalContainer2{
@@ -216,4 +216,59 @@
     box-shadow: 0px 0px 10px rgb(58, 58, 58);  
     font-size: 45px;
     justify-content: center;
+    padding: 45px;
+}
+
+.fieldCard{
+    color: black;
+    font-size: 28px;
+    text-align: center;
+}
+
+.excessCard1{
+    height: 180px;
+    width: 125px;
+    border: 1px solid black;
+    position: absolute;
+    align-self: flex-start;
+    margin-top: 7%;
+    margin-left: 10%;
+}
+
+.excessCard2{
+    height: 180px;
+    width: 125px;
+    border: 1px solid black;
+    position: absolute;
+    align-self: flex-start;
+    margin-top: 30%;
+    margin-left: 10%;
+}
+
+.modal3{
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    visibility: hidden;
+}
+
+#warBtn{
+    height: 15%;
+    font-size: 60px;
+    width: 25%;
+    background-color: rgb(175, 114, 0);
+    color: rgb(116, 0, 0);
+    visibility: inherit;
+    opacity: 0;
+}
+
+#warBtn:hover{
+    cursor: pointer;
+    transform: translateY(-4px);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
 }
