@@ -269,3 +269,29 @@
     transform: translateY(-4px);
     box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
 }
+
+.newFlipBtn{
+    height: 15%;
+    width: 17%;
+    font-size: 42px;
+    border-radius: 10px;
+    align-self: flex-end;
+    position: absolute;
+    margin-top: 350px;
+    margin-right: 50px;
+    background-color: green;
+    color: yellow;
+    transition: transform .3s, box-shadow .3s;
+}
+
+
+.newFlipBtn:hover{
+    transform: translateY(-4px);
+    box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+}
+
+.newFlipBtn:active{
+    transform: translateY(-1px);
+    box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
