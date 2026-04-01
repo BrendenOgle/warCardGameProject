@@ -228,7 +228,6 @@
 .excessCard1{
     height: 180px;
     width: 125px;
-    border: 1px solid black;
     position: absolute;
     align-self: flex-start;
     margin-top: 7%;
@@ -238,7 +237,6 @@
 .excessCard2{
     height: 180px;
     width: 125px;
-    border: 1px solid black;
     position: absolute;
     align-self: flex-start;
     margin-top: 30%;
@@ -263,7 +261,6 @@
     width: 25%;
     background-color: rgb(175, 114, 0);
     color: rgb(116, 0, 0);
-    visibility: inherit;
     opacity: 0;
 }
 
