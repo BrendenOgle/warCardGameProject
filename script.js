@@ -1,10 +1,10 @@
 // Global variables for making the deck
 let deck = []
 let suits = ["♠️", "♣️", "♥️", "♦️"]
-/* let value = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] */
-let value = [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2]
+let value = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
 
-
+let computerDeckExcess = []
+let playerDeckExcess = []
 let playerDeck = []
 let computerDeck = []
 let fieldDeck = []
@@ -12,6 +12,7 @@ let warDeck = []
 let pile = document.getElementById("cardPile")
 let container = document.getElementById("container")
 let warBtn = document.getElementById("warBtn")
+let newFlipBtn = null
 
 
 // main function that will call all sub-functions
@@ -264,6 +265,10 @@ function flipCards(){
 }
 
 function warButton(){
+    if(playerDeck.length < 3 || computerDeck.length < 3){
+        endGame()
+        return
+    }
     document.getElementById("modal3").style.visibility = "visible"
     warBtn.style.visibility = "visible"
     warBtn.style.opacity = "1"
@@ -272,16 +277,9 @@ function warButton(){
 }
 
 function war(){
-    if(playerDeck.length < 3 || computerDeck.length < 3){
-        endGame()
-        return
-    }
     document.getElementById("modal3").style.visibility = "hidden"
     warBtn.style.visibility = "hidden"
     showCards()
-    
-    let computerDeckExcess = []
-    let playerDeckExcess = []
 
     let excessCard1 = document.createElement("div")
     excessCard1.classList.add("excessCard1")
@@ -361,7 +359,153 @@ function war(){
         excessCard2.appendChild(card)
     }
 
+    console.log(computerDeck)
+    console.log(playerDeck)
+    console.log(playerDeckExcess)
+    console.log(computerDeckExcess)
+    document.getElementById("flipBtn").style.visibility = "hidden"
+    let newFlipBtn = document.createElement("button")
+    newFlipBtn.classList.add("newFlipBtn")
+    newFlipBtn.id = "newFlipBtn"
+    newFlipBtn.textContent = "Flip 4th Card"
+    container.appendChild(newFlipBtn)
+    newFlipBtn.onclick = continueWar
+}
+
+function continueWar(){
+    let newFlipBtn = document.getElementById("newFlipBtn")
+    newFlipBtn.style.visibility = "hidden"
+    let computerDeckContainer = document.getElementsByClassName("computerDeckContainer")[0]
+    let playerDeckContainer = document.getElementsByClassName("playerDeckContainer")[0]
+    fieldDeck.unshift(playerDeck[playerDeck.length - 1])
+    fieldDeck.unshift(computerDeck[computerDeck.length - 1])
+    playerDeck.pop()
+    computerDeck.pop()
+
+    for(let i = 0; i < computerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${computerDeck[i].value}</p>
+            <p class="cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${computerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${computerDeck[i].value}</p>
+        `
+        computerDeckContainer.appendChild(card)
+    }
+
+    for(let i = 0; i < playerDeck.length; i++){
+        let card = document.createElement("div")
+        card.classList.add("card")
+        card.innerHTML = `
+            <p class="cardValue">${playerDeck[i].value}</p>
+            <p class="cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardSuit">${playerDeck[i].suit}</p>
+            <p class="rightPartCard cardValue">${playerDeck[i].value}</p>
+        `
+        playerDeckContainer.appendChild(card)
+    }
     
+    let modal2 = document.getElementById("modal2")
+    console.log(fieldDeck)
+    let activePlayerCard = document.getElementById("activePlayerCard")
+    let activeComputerCard = document.getElementById("activeComputerCard")
+
+    for(let i = 0; i < fieldDeck.length; i++){
+        if(i === 0){
+            let card = document.createElement("div")
+            card.classList.add("card")
+            card.classList.add("fieldCard")
+            card.innerHTML = `
+                <p class="cardValue">${fieldDeck[1].value}</p>
+                <p class="cardSuit">${fieldDeck[1].suit}</p>
+                <p class="rightPartCard cardSuit">${fieldDeck[1].suit}</p>
+                <p class="rightPartCard cardValue">${fieldDeck[1].value}</p>
+            `
+            activePlayerCard.textContent = ""
+            activePlayerCard.appendChild(card)
+        }else if(i === 1){
+            let card = document.createElement("div")
+            card.classList.add("card")
+            card.classList.add("fieldCard")
+            card.innerHTML = `
+                <p class="cardValue">${fieldDeck[0].value}</p>
+                <p class="cardSuit">${fieldDeck[0].suit}</p>
+                <p class="rightPartCard cardSuit">${fieldDeck[0].suit}</p>
+                <p class="rightPartCard cardValue">${fieldDeck[0].value}</p>
+            `
+            activeComputerCard.textContent = ""
+            activeComputerCard.appendChild(card)
+        }
+    }
+
+    if(fieldDeck[1].value > fieldDeck[0].value){
+        let whoWins = document.getElementById("whoWins")
+        for(let i = 0; i < fieldDeck.length; i++){
+            playerDeck.unshift(fieldDeck[i])
+        }
+        for(let i = 0; i < playerDeckExcess.length; i++){
+            playerDeck.unshift(playerDeckExcess[i])
+        }
+        for(let i = 0; i < computerDeckExcess.length; i++){
+            playerDeck.unshift(computerDeckExcess[i])
+        }
+        whoWins.textContent = "Player Wins! Cards added to bottom of deck!"
+        fieldDeck = []
+        computerDeckExcess = []
+        playerDeckExcess = []
+
+        setTimeout(() =>{
+            modal2.style.visibility = "visible"
+            modal2.style.opacity = "1"
+            hideCards()
+        }, 2000)
+
+        setTimeout(() =>{
+            modal2.style.visibility = "hidden"
+            modal2.style.opacity = "0"
+            showCards()
+            activeComputerCard.innerHTML = `Active Computer Card`
+            activePlayerCard.innerHTML = `Active Player Card`
+            document.getElementById("flipBtn").style.visibility = "visible"
+        }, 4000)
+
+    } else if(fieldDeck[0].value > fieldDeck[1].value){
+        let whoWins = document.getElementById("whoWins")
+        for(let i = 0; i < fieldDeck.length; i++){
+            computerDeck.unshift(fieldDeck[i])
+        }
+        for(let i = 0; i < playerDeckExcess.length; i++){
+            computerDeck.unshift(playerDeckExcess[i])
+        }
+        for(let i = 0; i < computerDeckExcess.length; i++){
+            computerDeck.unshift(computerDeckExcess[i])
+        }
+        whoWins.textContent = "Computer Wins! Cards added to bottom of deck!"
+        fieldDeck = []
+        computerDeckExcess = []
+        playerDeckExcess = []
+        setTimeout(() =>{
+            modal2.style.visibility = "visible"
+            modal2.style.opacity = "1"
+            hideCards()
+        }, 2000)
+
+        setTimeout(() =>{
+            modal2.style.visibility = "hidden"
+            modal2.style.opacity = "0"
+            showCards()
+            activeComputerCard.innerHTML = `Active Computer Card`
+            activePlayerCard.innerHTML = `Active Player Card`
+            document.getElementById("flipBtn").style.visibility = "visible"
+        }, 4000)
+
+    }else if(fieldDeck[0].value === fieldDeck[1].value){
+        setTimeout(() =>{
+            warButton()
+            newFlipBtn.remove()
+        }, 2000)
+    }
 }
 
 function hideCards(){
