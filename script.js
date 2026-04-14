@@ -21,6 +21,8 @@ function startGame(){
     shuffleDeck(deck)
     shuffleDeck(deck)
     deckPile()
+    pile.style.opacity = "1"
+    pile.style.visibility = "visible"
 }
 
 function createDeck(){
@@ -55,13 +57,8 @@ function deckPile(){
 
     for(let i = 0; i < deck.length; i++){
         let card = document.createElement("div")
-        card.classList.add("card")
-        card.innerHTML = `
-            <p class="cardValue">${deck[i].value}</p>
-            <p class="cardSuit">${deck[i].suit}</p>
-            <p class="rightPartCard cardSuit">${deck[i].suit}</p>
-            <p class="rightPartCard cardValue">${deck[i].value}</p>
-        `
+        card.classList.add("backsideCards")
+        card.innerHTML = ``
         
         
         pile.appendChild(card)
@@ -70,69 +67,88 @@ function deckPile(){
 
 function dealHands(){
     document.getElementById("dealer").remove()
-    pile.innerHTML = ``
-    let i = 0
-        while(deck.length !== 0){
-            let topCard = deck.pop()
+    card = document.getElementsByClassName("backsideCards")
 
-            if(i === 0){
-                computerDeck.push(topCard)
-                i++
-            }else if(i === 1){
-                playerDeck.push(topCard)
-                i--
+    for(let i = 0; i < card.length; i++){
+        if(i % 2 === 0){
+            card[i].classList.add("dealPlayerCard")
+        }else{
+            card[i].classList.add("dealComputerCard")
+        }
+    }
+
+    setTimeout(() => {
+        
+        for(let i = 0; i < card.length; i++){
+            if(i % 2 === 0){
+            card[i].classList.remove("dealPlayerCard")
+            }else{
+                card[i].classList.remove("dealComputerCard")
             }
         }
-    
-    let flipButton = document.createElement("button")
-    flipButton.style.visibility = "hidden"
-    flipButton.style.opacity = "0"
 
-    let computerDeckContainer = document.createElement("div")
-    computerDeckContainer.style.visibility = "hidden"
-    computerDeckContainer.style.opacity = "0"
+        pile.innerHTML = ``
+        let i = 0
+            while(deck.length !== 0){
+                let topCard = deck.pop()
 
-    let playerDeckContainer = document.createElement("div")
-    playerDeckContainer.style.visibility = "hidden"
-    playerDeckContainer.style.opacity = "0"
+                if(i === 0){
+                    computerDeck.push(topCard)
+                    i++
+                }else if(i === 1){
+                    playerDeck.push(topCard)
+                    i--
+                }
+            }
+        
+        let flipButton = document.createElement("button")
+        flipButton.style.visibility = "hidden"
+        flipButton.style.opacity = "0"
 
-    flipButton.classList.add("flipButton")
-    playerDeckContainer.classList.add("playerDeckContainer")
-    computerDeckContainer.classList.add("computerDeckContainer")
-    container.appendChild(computerDeckContainer)
-    container.appendChild(flipButton)
-    container.appendChild(playerDeckContainer)
+        let computerDeckContainer = document.createElement("div")
+        computerDeckContainer.style.visibility = "hidden"
+        computerDeckContainer.style.opacity = "0"
 
-    for(let i = 0; i < computerDeck.length; i++){
-        let card = document.createElement("div")
-        card.classList.add("backsideCards")
-        card.innerHTML = ``
-        computerDeckContainer.appendChild(card)
-    }
+        let playerDeckContainer = document.createElement("div")
+        playerDeckContainer.style.visibility = "hidden"
+        playerDeckContainer.style.opacity = "0"
 
-    for(let i = 0; i < playerDeck.length; i++){
-        let card = document.createElement("div")
-        card.classList.add("backsideCards")
-        card.innerHTML = ``
-        playerDeckContainer.appendChild(card)
-    }
-    
-    let activePlayerCard = document.createElement("div")
-    activePlayerCard.style.visibility = "hidden"
-    activePlayerCard.style.opacity = "0"
+        flipButton.classList.add("flipButton")
+        playerDeckContainer.classList.add("playerDeckContainer")
+        computerDeckContainer.classList.add("computerDeckContainer")
+        container.appendChild(computerDeckContainer)
+        container.appendChild(flipButton)
+        container.appendChild(playerDeckContainer)
 
-    let activeComputerCard = document.createElement("div")
-    activeComputerCard.style.visibility = "hidden"
-    activeComputerCard.style.opacity = "0"
+        for(let i = 0; i < computerDeck.length; i++){
+            let card = document.createElement("div")
+            card.classList.add("backsideCards")
+            card.innerHTML = ``
+            computerDeckContainer.appendChild(card)
+        }
 
-    activePlayerCard.classList.add("activePlayerCard")
-    activeComputerCard.classList.add("activeComputerCard")
-    activePlayerCard.id = "activePlayerCard"
-    activeComputerCard.id = "activeComputerCard"
-    container.appendChild(activeComputerCard)
-    container.appendChild(activePlayerCard)
-    
-    setTimeout(() => {
+        for(let i = 0; i < playerDeck.length; i++){
+            let card = document.createElement("div")
+            card.classList.add("backsideCards")
+            card.innerHTML = ``
+            playerDeckContainer.appendChild(card)
+        }
+        
+        let activePlayerCard = document.createElement("div")
+        activePlayerCard.style.visibility = "hidden"
+        activePlayerCard.style.opacity = "0"
+
+        let activeComputerCard = document.createElement("div")
+        activeComputerCard.style.visibility = "hidden"
+        activeComputerCard.style.opacity = "0"
+
+        activePlayerCard.classList.add("activePlayerCard")
+        activeComputerCard.classList.add("activeComputerCard")
+        activePlayerCard.id = "activePlayerCard"
+        activeComputerCard.id = "activeComputerCard"
+        container.appendChild(activeComputerCard)
+        container.appendChild(activePlayerCard)
+        
         flipButton.style.visibility = "visible"
         flipButton.style.opacity = "1"
         computerDeckContainer.style.visibility = "visible"
@@ -154,7 +170,7 @@ function dealHands(){
         flipButton.textContent = "Flip Cards"
         flipButton.id = "flipBtn"
         flipButton.onclick = flipCards
-    }, 1000)
+    }, 1250);
 }
 
 function flipCards(){
@@ -292,7 +308,7 @@ function flipCards(){
         }
         console.log(playerDeck.length)
         console.log(computerDeck.length)
-    }, 1000);
+    }, 725);
 }
 function warButton(){
     if(playerDeck.length < 3 || computerDeck.length < 3){
