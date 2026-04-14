@@ -123,10 +123,25 @@ body{
     transform: rotateY(180deg) translateY(-105%);
 }
 
+.dealPlayerCard{
+    transition: transform 1s;
+    transform: translateY(-202%);
+    position: absolute;
+}
+
+.dealComputerCard{
+    transition: transform 1s;
+    transform: translateY(128%);
+    position: absolute;
+}
+
 #cardPile{
     height: 180px;
     width: 125px;
-    margin-top: 10%;
+    margin-top: 25%;
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
 }
 
 #dealer{
