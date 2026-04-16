@@ -174,7 +174,7 @@ function dealHands(){
 }
 
 function flipCards(){
-    if(playerDeck < 1 || computerDeck < 1){
+    if(playerDeck.length < 1 || computerDeck.length < 1){
         endGame()
         return
     }
@@ -255,7 +255,7 @@ function flipCards(){
             for(let i = 0; i < fieldDeck.length; i++){
                 playerDeck.unshift(fieldDeck[i])
             }
-            whoWins.textContent = "Player Wins! Cards added to bottom of deck!"
+            whoWins.textContent = "Player Wins This Round!"
             fieldDeck.length = 0
 
             setTimeout(() =>{
@@ -281,7 +281,7 @@ function flipCards(){
             for(let i = 0; i < fieldDeck.length; i++){
                 computerDeck.unshift(fieldDeck[i])
             }
-            whoWins.textContent = "Computer Wins! Cards added to bottom of deck!"
+            whoWins.textContent = "Computer Wins This Round!"
             fieldDeck.length = 0
             setTimeout(() =>{
                 computerDeckContainer.classList.remove("flipComputerCard")
@@ -422,11 +422,16 @@ function continueWar(){
 
     fieldDeck = [computerCard, playerCard]
 
+    setTimeout(() => {
+    activeComputerCard.style.visibility = "visible"
+    activeComputerCard.style.opacity = "1"
+    activePlayerCard.style.visibility = "visible"
+    activePlayerCard.style.opacity = "1"
+
     for(let i = 0; i < fieldDeck.length; i++){
         if(i === 0){
             let card = document.createElement("div")
-            card.classList.add("card")
-            card.classList.add("fieldCard")
+            card.classList.add("card", "fieldCard")
             card.innerHTML = `
                 <p class="cardValue">${playerCard.value}</p>
                 <p class="cardSuit">${playerCard.suit}</p>
@@ -435,10 +440,10 @@ function continueWar(){
             `
             activePlayerCard.textContent = ""
             activePlayerCard.appendChild(card)
-        }else if(i === 1){
+
+        } else if(i === 1){
             let card = document.createElement("div")
-            card.classList.add("card")
-            card.classList.add("fieldCard")
+            card.classList.add("card", "fieldCard")
             card.innerHTML = `
                 <p class="cardValue">${computerCard.value}</p>
                 <p class="cardSuit">${computerCard.suit}</p>
@@ -447,8 +452,9 @@ function continueWar(){
             `
             activeComputerCard.textContent = ""
             activeComputerCard.appendChild(card)
+            }
         }
-    }
+    }, 725);
 
     let computerDeckContainer = document.getElementsByClassName("computerDeckContainer")[0]
     let playerDeckContainer = document.getElementsByClassName("playerDeckContainer")[0]
@@ -460,7 +466,7 @@ function continueWar(){
         console.log(playerDeck.length)
         console.log(computerDeck.length)
         let whoWins = document.getElementById("whoWins")
-        whoWins.textContent = "Player Wins! Cards added to bottom of deck!"
+        whoWins.textContent = "Player Wins This Round!"
 
         setTimeout(() =>{
             document.getElementById("flipBtn").style.visibility = "hidden"
@@ -510,7 +516,7 @@ function continueWar(){
         console.log(computerDeck.length)
 
         let whoWins = document.getElementById("whoWins")
-        whoWins.textContent = "Computer Wins! Cards added to bottom of deck!"
+        whoWins.textContent = "Computer Wins This Round!"
         setTimeout(() =>{
             modal2.style.visibility = "visible"
             modal2.style.opacity = "1"
@@ -597,7 +603,5 @@ function showCards(){
 }
 
 function endGame(){
-    container.innerHTML = ``
-    document.getElementById("modal").style.visibility = "visible"
-    document.getElementById("modal").style.opacity = "1"
+    location.reload()
 }
