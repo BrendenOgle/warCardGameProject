@@ -84,19 +84,28 @@ body{
     width: 125px;
     background-color: white;
     border-radius: 7px;
-    padding-left: 10px;
     font-size: 24px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
     border: 1px solid black;
     position: absolute;
     opacity: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: initial;
+    padding: 5px;
+}
+
+.cardValue, .cardSuit{
+    margin-left: 12px;
+    margin-top: 5px;
+}
+
+.cardValue{
+    margin-left: 20px;
 }
 
 .rightPartCard{
-    align-self:last baseline;
-    padding-right: 10px;
+    margin-left: 70px;
+    margin-top: 5px;
 }
 
 .backsideCards{
@@ -282,7 +291,6 @@ body{
 .fieldCard{
     color: black;
     font-size: 28px;
-    text-align: center;
 }
 
 .warPile{
@@ -345,4 +353,27 @@ body{
 .newFlipBtn:active{
     transform: translateY(-1px);
     box-shadow: inset 0px 0px 10px rgba(0, 0, 0, 0.8);
+}
+
+.deckCount{
+    height: 10%;
+    width: 20%;
+    margin-left: 33%;
+    position: absolute;
+    opacity: 0;
+    visibility: 0;
+    transition: opacity 1s ease;
+    font-size: 32px;
+    padding: 15px;
+    color: yellow;
+    font-weight: 500;
+}
+
+#playerCount{
+    margin-top: 37%;
+}
+
+#computerCount{
+    margin-top: 10%;
+
 }
