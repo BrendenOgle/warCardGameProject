@@ -938,8 +938,8 @@ function checkCardValue(value){
 
 // function to update the counters
 function updateCount(){
-    document.getElementById("playerCount").textContent = `Player: ${playerDeck.length}`
-    document.getElementById("computerCount").textContent = `Computer: ${computerDeck.length}`
+    document.getElementById("playerCount").textContent = `Player: ${playerDeck.length} Cards`
+    document.getElementById("computerCount").textContent = `Computer: ${computerDeck.length} Cards`
 }
 
 // function to end the game and reload the page.
