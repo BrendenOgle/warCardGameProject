@@ -1,4 +1,5 @@
 // Global variables for making the deck
+
 // Full deck before cards are dealt
 let deck = []
 
@@ -28,6 +29,7 @@ let container = document.getElementById("container")
 
 // War button element
 let warBtn = document.getElementById("warBtn")
+
 
 // main function that starts the game
 function startGame(){
@@ -131,6 +133,23 @@ function dealHands(){
             card[i].classList.add("dealComputerCard")
         }
     }
+    
+    let seconds = 300
+    let timerDisplay = document.createElement("h1")
+    timerDisplay.classList = "timerDisplay"
+    timerDisplay.innerHTML = `${seconds} Seconds Left`
+    container.appendChild(timerDisplay)
+
+    setInterval(() => {
+        seconds--
+        console.log(seconds)
+        timerDisplay.innerHTML = seconds + " Seconds Left"
+        if(seconds === 0){
+            endGame()
+            document.getElementById("playerCount").style.visibility = "hidden"
+            document.getElementById("computerCount").style.visibility = "hidden"
+        }
+    }, 1000)
 
     setTimeout(() => {
         
@@ -265,6 +284,8 @@ function dealHands(){
         flipButton.onclick = flipCards
 
     }, 1250);
+
+
 }
 
 function flipCards(){
@@ -383,7 +404,8 @@ function flipCards(){
                 endGame()
                 return
             }
-
+            
+            document.getElementById("modalContainer2").style.backgroundColor = "green"
             whoWins.textContent = "Player Wins This Round!"
             fieldDeck.length = 0
 
@@ -426,6 +448,7 @@ function flipCards(){
                 return
             }
 
+            document.getElementById("modalContainer2").style.backgroundColor = "red"
             whoWins.textContent = "Computer Wins This Round!"
             fieldDeck.length = 0
 
@@ -669,26 +692,26 @@ function continueWar(){
 
     setTimeout(() => {
 
-    // Show active areas
-    activeComputerCard.style.visibility = "visible"
-    activeComputerCard.style.opacity = "1"
-    activePlayerCard.style.visibility = "visible"
-    activePlayerCard.style.opacity = "1"
+        // Show active areas
+        activeComputerCard.style.visibility = "visible"
+        activeComputerCard.style.opacity = "1"
+        activePlayerCard.style.visibility = "visible"
+        activePlayerCard.style.opacity = "1"
 
-    // Render compared cards
-    for(let i = 0; i < fieldDeck.length; i++){
-        if(i === 0){
-            let card = document.createElement("div")
-            let displayValue = checkCardValue(fieldDeck[1].value)
-            card.classList.add("card", "fieldCard")
-            card.innerHTML = `
-                <p class="cardValue">${displayValue}</p>
-                <p class="cardSuit">${playerCard.suit}</p>
-                <p class="rightPartCard cardSuit">${playerCard.suit}</p>
-                <p class="rightPartCard cardValue">${displayValue}</p>
-            `
-            activePlayerCard.textContent = ""
-            activePlayerCard.appendChild(card)
+        // Render compared cards
+        for(let i = 0; i < fieldDeck.length; i++){
+            if(i === 0){
+                let card = document.createElement("div")
+                let displayValue = checkCardValue(fieldDeck[1].value)
+                card.classList.add("card", "fieldCard")
+                card.innerHTML = `
+                    <p class="cardValue">${displayValue}</p>
+                    <p class="cardSuit">${playerCard.suit}</p>
+                    <p class="rightPartCard cardSuit">${playerCard.suit}</p>
+                    <p class="rightPartCard cardValue">${displayValue}</p>
+                `
+                activePlayerCard.textContent = ""
+                activePlayerCard.appendChild(card)
 
         } else if(i === 1){
             let card = document.createElement("div")
@@ -721,6 +744,8 @@ function continueWar(){
         console.log(playerDeck.length)
         console.log(computerDeck.length)
         let whoWins = document.getElementById("whoWins")
+
+        document.getElementById("modalContainer2").style.backgroundColor = "green"
         whoWins.textContent = "Player Wins This Round!"
 
         // flip the card
@@ -788,6 +813,7 @@ function continueWar(){
         console.log(computerDeck.length)
 
         let whoWins = document.getElementById("whoWins")
+        document.getElementById("modalContainer2").style.backgroundColor = "red"
         whoWins.textContent = "Computer Wins This Round!"
         // display who wins the round
         setTimeout(() =>{
@@ -950,15 +976,15 @@ function endGame(){
     modal2.style.height = "100%"
     document.getElementById("modalContainer2").style.height = "auto"
 
-    if(computerDeck.length < 4 && playerDeck.length > 4){
-        whoWins.textContent = "Player Wins! Computer ran out of cards!"
+    if(computerDeck.length < playerDeck.length){
+        whoWins.textContent = "Player Wins!"
         modal2.style.visibility = "visible"
         modal2.style.opacity = "1"
-    }else if(playerDeck.length < 4 && computerDeck.length > 4){
-        whoWins.textContent = "Computer Wins! Player ran out of cards!"
+    }else if(playerDeck.length < computerDeck.length){
+        whoWins.textContent = "Computer Wins!"
         modal2.style.visibility = "visible"
         modal2.style.opacity = "1"
-    }else if(computerDeck.length < 4 && playerDeck.length < 4){
+    }else if(computerDeck.length === playerDeck.length){
         whoWins.textContent = "You did the impossible!! It's a draw!"
         modal2.style.visibility = "visible"
         modal2.style.opacity = "1"
